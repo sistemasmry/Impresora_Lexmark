@@ -6,6 +6,19 @@
 <title>ReadMind - Video</title>
 
 <style>
+    /* =========================================================
+       VARIABLES DE CONFIGURACIÓN (¡Modifica estos valores!)
+       ========================================================= */
+    :root {
+        /* 1. TAMAÑO DEL VIDEO: Cambia "270px" por un número mayor para agrandarlo (ej: 350px, 400px o 100%) */
+        --ancho-video: 350px; 
+
+        /* 2. POSICIÓN DE LA BARRA: Cambia "26px" para moverla. 
+           - Más grande (ej: 50px) para bajarla más.
+           - Cero o negativo (ej: 0px o -40px) para subirla e incluso ponerla encima del video. */
+        --distancia-barra: 26px;
+    }
+
     * {
         box-sizing: border-box;
     }
@@ -26,8 +39,9 @@
         padding: 20px 16px;
     }
 
+    /* Contenedor principal ajustado con la variable */
     .player {
-        width: min(100%, 270px);
+        width: min(100%, var(--ancho-video));
     }
 
     /* Área blanca donde se reproduce el video */
@@ -49,11 +63,12 @@
         background: #FFFFFF;
     }
 
-    /* Barra de progreso */
+    /* Barra de progreso ajustada con la variable */
     .progress-area {
-        margin-top: 26px;
+        margin-top: var(--distancia-barra);
         width: 100%;
         position: relative;
+        z-index: 10; /* Asegura que se pueda hacer clic si la subes por encima del video */
     }
 
     .progress {
@@ -125,6 +140,8 @@
         font-size: 16px;
         line-height: 20px;
         font-weight: 400;
+        /* Si subes la barra encima del video, puedes querer ponerle una sombra al texto para que se lea mejor: */
+        /* text-shadow: 1px 1px 3px rgba(0,0,0,0.8); */
     }
 
     @media (max-width: 360px) {
