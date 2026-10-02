@@ -10,13 +10,17 @@
        VARIABLES DE CONFIGURACIÓN (¡Modifica estos valores!)
        ========================================================= */
     :root {
-        /* 1. TAMAÑO DEL VIDEO: Cambia "270px" por un número mayor para agrandarlo (ej: 350px, 400px o 100%) */
+        /* 1. TAMAÑO Y POSICIÓN */
         --ancho-video: 400px; 
-
-        /* 2. POSICIÓN DE LA BARRA: Cambia "26px" para moverla. 
-           - Más grande (ej: 50px) para bajarla más.
-           - Cero o negativo (ej: 0px o -40px) para subirla e incluso ponerla encima del video. */
         --distancia-barra: 40px;
+
+        /* 2. SOMBRA DEL VIDEO */
+        --sombra-video: 0px 10px 30px rgba(0, 0, 0, 0.5);
+
+        /* 3. FONDO DEGRADÉ / TORNASOLADO ANIMADO */
+        --color-arriba: #0898da; /* Azul claro */
+        --color-abajo: #001B4D;  /* Azul oscuro */
+        --velocidad-fondo: 6s;   /* Qué tan rápido se mueve el degradé (ej: 4s, 8s) */
     }
 
     * {
@@ -27,7 +31,6 @@
         margin: 0;
         width: 100%;
         min-height: 100%;
-        background: #00348A;
         font-family: Arial, Helvetica, sans-serif;
     }
 
@@ -37,6 +40,24 @@
         align-items: flex-start;
         min-height: 100vh;
         padding: 20px 16px;
+        
+        /* 
+           Se crea el degradé (linear-gradient) de arriba (0deg o 180deg) a abajo.
+           Se hace que el fondo sea el doble de alto (200%) para poder moverlo.
+        */
+        background: linear-gradient(180deg, var(--color-arriba), var(--color-abajo));
+        background-size: 100% 200%;
+        animation: moverFondo var(--velocidad-fondo) ease-in-out infinite alternate;
+    }
+
+    /* Keyframes que mueven la posición del fondo para crear el efecto tornasolado */
+    @keyframes moverFondo {
+        0% {
+            background-position: 50% 0%; /* Muestra la parte superior del degradé */
+        }
+        100% {
+            background-position: 50% 100%; /* Muestra la parte inferior del degradé */
+        }
     }
 
     /* Contenedor principal ajustado con la variable */
@@ -53,6 +74,9 @@
         overflow: hidden;
         cursor: pointer;
         position: relative;
+        
+        /* Aplica la sombra usando la variable */
+        box-shadow: var(--sombra-video);
     }
 
     video {
@@ -140,17 +164,16 @@
         font-size: 16px;
         line-height: 20px;
         font-weight: 400;
+        text-shadow: 0px 2px 4px rgba(0,0,0,0.3);
     }
 
-    /* =========================================================
-       NUEVO: ESTILOS PARA LOS BOTONES
-       ========================================================= */
+    /* Botones */
     .buttons-area {
         display: flex;
-        justify-content: center; /* Centra los botones horizontalmente */
+        justify-content: center;
         align-items: center;
-        gap: 15px; /* Espacio de separación entre los botones */
-        margin-top: 25px; /* Separación con el tiempo del video */
+        gap: 15px;
+        margin-top: 25px;
         width: 100%;
     }
 
@@ -160,28 +183,27 @@
         font-size: 15px;
         font-weight: bold;
         padding: 12px 0;
-        border-radius: 25px; /* Bordes redondeados */
+        border-radius: 25px;
         text-align: center;
-        flex: 1; /* Hace que ambos botones midan lo mismo */
-        max-width: 160px; /* Ancho máximo para que no se estiren demasiado */
+        flex: 1;
+        max-width: 160px;
         transition: background 0.2s, transform 0.1s;
+        box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
     }
 
-    /* Efecto al presionar el botón */
     .contact-btn:active {
         transform: scale(0.95);
     }
 
-    /* Colores específicos de cada botón */
     .btn-email {
-        background: #0878FF; /* Gris oscuro elegante */
+        background: #0878FF;
     }
     .btn-email:hover {
         background: #0063d1;
     }
 
     .btn-phone {
-        background: #0878FF; /* Azul igual que la barra */
+        background: #0878FF;
     }
     .btn-phone:hover {
         background: #0063d1;
@@ -193,7 +215,7 @@
             padding-right: 16px;
         }
         .buttons-area {
-            gap: 10px; /* Menos espacio en pantallas muy pequeñas */
+            gap: 10px;
         }
     }
 </style>
@@ -226,15 +248,8 @@
         <div class="time" id="time">0:00 / 0:00</div>
     </div>
 
-    <!-- =========================================================
-         NUEVO: ÁREA DE BOTONES DE CONTACTO
-         ========================================================= -->
     <div class="buttons-area">
-        <!-- Izquierda: Correo Electrónico (mailto:) -->
         <a href="mailto:mda@aerolineas.com.ar" class="contact-btn btn-email">Email</a>
-
-        <!-- Derecha: Celular (tel:) -->
-        <!-- Si prefieres que abra WhatsApp en vez de llamar, usa: href="https://wa.me/37238400" -->
         <a href="tel:37238400" class="contact-btn btn-phone">Llamar</a>
     </div>
 
@@ -294,7 +309,6 @@
         if (!Number.isFinite(seconds)) return "0:00";
 
         seconds = Math.floor(seconds);
-
         const minutes = Math.floor(seconds / 60);
         const remainingSeconds = seconds % 60;
 
