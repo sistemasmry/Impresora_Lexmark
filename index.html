@@ -11,12 +11,12 @@
        ========================================================= */
     :root {
         /* 1. TAMAÑO DEL VIDEO: Cambia "270px" por un número mayor para agrandarlo (ej: 350px, 400px o 100%) */
-        --ancho-video: 380px; 
+        --ancho-video: 400px; 
 
         /* 2. POSICIÓN DE LA BARRA: Cambia "26px" para moverla. 
            - Más grande (ej: 50px) para bajarla más.
            - Cero o negativo (ej: 0px o -40px) para subirla e incluso ponerla encima del video. */
-        --distancia-barra: 55px;
+        --distancia-barra: 40px;
     }
 
     * {
@@ -68,7 +68,7 @@
         margin-top: var(--distancia-barra);
         width: 100%;
         position: relative;
-        z-index: 10; /* Asegura que se pueda hacer clic si la subes por encima del video */
+        z-index: 10;
     }
 
     .progress {
@@ -140,14 +140,60 @@
         font-size: 16px;
         line-height: 20px;
         font-weight: 400;
-        /* Si subes la barra encima del video, puedes querer ponerle una sombra al texto para que se lea mejor: */
-        /* text-shadow: 1px 1px 3px rgba(0,0,0,0.8); */
+    }
+
+    /* =========================================================
+       NUEVO: ESTILOS PARA LOS BOTONES
+       ========================================================= */
+    .buttons-area {
+        display: flex;
+        justify-content: center; /* Centra los botones horizontalmente */
+        align-items: center;
+        gap: 15px; /* Espacio de separación entre los botones */
+        margin-top: 25px; /* Separación con el tiempo del video */
+        width: 100%;
+    }
+
+    .contact-btn {
+        text-decoration: none;
+        color: #FFFFFF;
+        font-size: 15px;
+        font-weight: bold;
+        padding: 12px 0;
+        border-radius: 25px; /* Bordes redondeados */
+        text-align: center;
+        flex: 1; /* Hace que ambos botones midan lo mismo */
+        max-width: 160px; /* Ancho máximo para que no se estiren demasiado */
+        transition: background 0.2s, transform 0.1s;
+    }
+
+    /* Efecto al presionar el botón */
+    .contact-btn:active {
+        transform: scale(0.95);
+    }
+
+    /* Colores específicos de cada botón */
+    .btn-email {
+        background: #0878FF; /* Gris oscuro elegante */
+    }
+    .btn-email:hover {
+        background: #0063d1;
+    }
+
+    .btn-phone {
+        background: #0878FF; /* Azul igual que la barra */
+    }
+    .btn-phone:hover {
+        background: #0063d1;
     }
 
     @media (max-width: 360px) {
         body {
             padding-left: 16px;
             padding-right: 16px;
+        }
+        .buttons-area {
+            gap: 10px; /* Menos espacio en pantallas muy pequeñas */
         }
     }
 </style>
@@ -178,6 +224,18 @@
         >
 
         <div class="time" id="time">0:00 / 0:00</div>
+    </div>
+
+    <!-- =========================================================
+         NUEVO: ÁREA DE BOTONES DE CONTACTO
+         ========================================================= -->
+    <div class="buttons-area">
+        <!-- Izquierda: Correo Electrónico (mailto:) -->
+        <a href="mailto:tu-correo@ejemplo.com" class="contact-btn btn-email">Email</a>
+
+        <!-- Derecha: Celular (tel:) -->
+        <!-- Si prefieres que abra WhatsApp en vez de llamar, usa: href="https://wa.me/5491100000000" -->
+        <a href="tel:+5491100000000" class="contact-btn btn-phone">Llamar</a>
     </div>
 
 </div>
